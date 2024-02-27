@@ -1,0 +1,18 @@
+.feature-text {
+  margin: 0 8px 16px;
+  padding: 8px 16px;
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: 16px;
+  background-color: rgba(130, 87, 230, 0.8);
+  border-radius: 3px;
+  transition: background-color var(--animation);
+}
+
+/* states */
+
+.feature-text:hover {
+  color: var(--text-color);
+  text-decoration: none;
+  background-color: rgba(130, 87, 230, 1);
+}
