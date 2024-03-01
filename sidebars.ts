@@ -13,6 +13,7 @@ const sidebars: SidebarsConfig = {
         {
           Course: [
             'courses/build-responsive-real-world-websites-with-html-and-css/course/section-01',
+            'courses/build-responsive-real-world-websites-with-html-and-css/course/section-02',
           ],
         },
       ],
