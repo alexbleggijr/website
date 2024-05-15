@@ -1,0 +1,46 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: var(--surface-01);
+}
+
+.navbar__brand {
+  color: var(--text-color);
+}
+
+.navbar__logo {
+  width: 48px;
+  height: 48px;
+}
+
+.navbar__logo img {
+  border-radius: 50%;
+}
+
+.navbar__title {
+  margin: 0;
+}
+
+.navbar__link {
+  padding: 8px;
+  color: var(--text-color);
+}
+
+.navbar__toggle {
+  margin: 0 0 0 auto;
+  color: var(--text-color);
+}
+
+/* components */
+
+.navbar .navbar-icon {
+  margin-right: 16px;
+}
+
+/* media-queries */
+
+@media (max-width: 996px) {
+  .navbar__items {
+    flex-direction: row-reverse;
+  }
+}
