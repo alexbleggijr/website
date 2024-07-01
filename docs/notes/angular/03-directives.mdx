@@ -1,0 +1,103 @@
+---
+id: directives
+title: Notes · Angular · Directives
+sidebar_label: Directives
+slug: /notes/angular/directives
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+# Directives
+
+## Resources
+
+- [Angular Docs · Directives](https://angular.dev/guide/directives)
+
+## Introduction
+
+Directives are classes that add additional behavior to elements in your Angular applications.
+
+### Components
+
+> Used with a template. This type of directive is the most common directive type.
+
+### Attribute directives
+
+> Change the appearance or behavior of an element, component, or another directive.
+
+### Structural directives
+
+> Change the DOM layout by adding and removing DOM elements.
+
+## Setup
+
+```bash showLineNumbers
+npx ng g c course-card
+```
+
+```ts {2,7} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+```html title="app/app.component.html" showLineNumbers
+<app-course-card />
+```
+
+## Attribute directives
+
+Attribute directives listen to and modify the behavior of other HTML elements, attributes, properties, and components.
+
+### NgClass
+
+> Adds and removes a set of CSS classes.
+
+> TODO: add link
+
+:::note
+To add or remove a single class, use [class binding](a) rather than `NgClass`.
+:::
+
+1. Add `NgClass` to the component's imports list:
+
+```ts {1,7} title="Angular 18 · src/app/course-card/course-card.component.ts"
+import { NgClass } from '@angular/common';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [NgClass],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+#### Using with a string
+
+#### Using with an array of strings
+
+#### Using with an object
+
+#### Using with a method
+
+### NgStyle
+
+> Adds and removes a set of HTML styles.
+
+### NgModel
+
+> Adds two-way data binding to an HTML form element.
+

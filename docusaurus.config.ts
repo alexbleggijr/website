@@ -82,22 +82,35 @@ const config: Config = {
           title: 'Courses',
           items: [
             {
-              label: 'React Native',
-              to: 'docs/rocketseat/training/react-native',
+              label: 'Figma',
+              to: 'docs/udemy/design/figma/essentials',
             },
             {
-              label: 'Angular Core',
-              to: 'docs/udemy/angular-university/angular-core',
+              label: 'Angular · Core',
+              to: 'docs/udemy/angular/angular-core',
+            },
+            {
+              label: 'React',
+              to: 'docs/rocketseat/training/react',
+            },
+            {
+              label: 'React Native',
+              to: 'docs/rocketseat/training/react-native',
             },
           ],
         },
         {
           title: 'Notes',
-          items: [],
-        },
-        {
-          title: 'Links',
-          items: [],
+          items: [
+            {
+              label: 'BEM Methodology',
+              to: 'docs/notes/bem-methodology',
+            },
+            {
+              label: 'Angular',
+              to: 'docs/notes/angular/directives',
+            },
+          ],
         },
       ],
       style: 'dark',
@@ -122,13 +135,13 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/certificates',
-          label: 'Certificates',
+          to: 'docs/notes',
+          label: 'Notes',
           position: 'left',
         },
         {
-          to: 'docs/notes',
-          label: 'Notes',
+          to: '/certificates',
+          label: 'Certificates',
           position: 'left',
         },
         {

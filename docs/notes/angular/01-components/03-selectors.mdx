@@ -1,0 +1,281 @@
+---
+id: selectors
+title: Notes · Angular · Components · Selectors
+sidebar_label: Selectors
+slug: /notes/angular/components/selectors
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## Resources
+
+- [Angular Docs](https://angular.dev/guide/components/selectors)
+
+## [Selectors](https://angular.dev/guide/components/importing)
+
+Every component defines a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors) that determines how the component is used:
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+You use a component by creating a matching HTML element in the templates of other components:
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<app-course-card />
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+**Angular matches selectors statically at compile-time**. Changing the DOM at run-time, either via Angular bindings or with DOM APIs, does not affect the components rendered.
+
+## [Types of selectors](https://angular.dev/guide/components/selectors#types-of-selectors)
+
+**Not supported:**
+
+- Selector [combinators](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors#combinators_and_separators).
+- [Attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) value operators other than [`[attr=value]`](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors#attrvalue).
+- [Namespaces](https://developer.mozilla.org/en-US/docs/Related/IMSC/Namespaces).
+- [Pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors#selectors) or [Pseudo-elements](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors#selectors) other than [`:not()`](https://developer.mozilla.org/en-US/docs/Web/CSS/:not)
+
+**Supported:**
+
+- Combining selectors
+- Multiple selectors
+```ts
+@Component({
+  selector: `app-course-card, [app-course-card], .app-course-card, #app-course-card`
+})
+```
+
+### Type selector
+
+Matches elements based on their HTML tag name, or node name.
+
+**course-card component**
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**app component**
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<app-course-card />
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+### Attribute selector
+
+Matches elements based on the presence of an HTML attribute.
+
+**course-card component**
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '[app-course-card]',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**app component**
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<div app-course-card></div>
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+Optionally, an exact value for that attribute.
+
+**course-card component**
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '[app-course-card="true"]',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**app component**
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<div app-course-card="true"></div>
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+### Class selector
+
+Matches elements based on the presence of a CSS class.
+
+**course-card component**
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '.app-course-card',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**app component**
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<div class="app-course-card"></div>
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+### Id selector
+
+Matches elements based on the presence of a CSS class.
+
+**course-card component**
+
+```ts {4} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: '#app-course-card',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**app component**
+
+```html {2} title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<div id="app-course-card"></div>
+```
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+## [Choosing a selector](https://angular.dev/guide/components/selectors#choosing-a-selector)
+
+The vast majority of components should use a custom element name as their selector. All custom element names should include a hyphen as described by [the HTML specification](https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name).
+
+### [Selector prefixes](https://angular.dev/guide/components/selectors#selector-prefixes)
+
+The Angular team recommends using a short, consistent prefix for all the custom components defined inside your project. Namespacing your selectors like this makes it immediately clear where a particular component comes from. By default, the Angular CLI uses `app-`.
+
+### [Attribute selectors](https://angular.dev/guide/components/selectors#when-to-use-an-attribute-selector)
+
+- [Stackblitz](https://stackblitz.com/edit/stackblitz-starters-73du4g) example
+
+You should consider an attribute selector when you want to create a component on a standard native element.
+
+This approach allows consumers of the component to directly use all the element's standard APIs without extra work. This is especially valuable for ARIA attributes such as `aria-label`.

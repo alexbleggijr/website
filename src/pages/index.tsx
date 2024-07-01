@@ -43,7 +43,7 @@ const FeatureList = [
     description: (
       <>
         A list of courses I took, totaling{' '}
-        {getNumberOfDays('01/07/2024', getCurrentDay())} hours.
+        {getNumberOfDays('07/01/2024', getCurrentDay())} hours.
       </>
     ),
   },

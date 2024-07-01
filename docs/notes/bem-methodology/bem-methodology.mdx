@@ -1,0 +1,188 @@
+---
+id: bem-methodology
+title: Notes · BEM Methodology
+sidebar_label: BEM Methodology
+slug: /notes/bem-methodology
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+# BEM Methodology
+
+Although the methodology has a whole **[ecosystem](https://en.bem.info/)** on top of it, this notes cover its use applied only to CSS class naming.
+
+## General
+
+Blocks, elements, and modifiers are all called **BEM entities**.
+
+By providing naming conventions for CSS classes the methodology:
+- Prevent name collisions by providing unique names
+- Avoid CSS specificity issues by limiting or completely removing the need for cascades
+
+### Naming Convention
+
+The name of a BEM entity in the classic approach should:
+
+- Be unique
+- Convey a meaning
+- Be written in lowercase characters
+- Be separated by a dash **(-)** if composite
+- `block-name__elem-name_mod-name_mod-val`
+
+There are alternative naming conventions and rules that are used in the BEM community, such as:
+
+- Two dash style: `block-name__elem-name--mod-name--mod-val`
+- Camelcase style: `blockName-elemName_modName_modVal`
+- React style: `BlockName-ElemName_modName_modVal`
+- No namespace style: where the block or element name is not included before the modifier
+
+The official documentation specifies that you can create your own custom naming for BEM entities, as it is possible to programmatically separate element blocks and modifiers.
+
+### Features
+
+- Block and element entities can be nested
+- Only class attributes should be used to refer to a BEM entity
+- Selectors must not be nested or combined
+
+## Block Entity
+
+A block:
+
+- Is a logically and functionally independent component
+- Should be created if it can be reused and does not depend on anything else
+
+### Naming
+
+The block name must:
+
+- Define the namespace for its elements and modifiers
+- Describe its purpose (_what is it? A header? A button?_)
+- Be separated by a dash **(-)** if composite
+
+### Features
+
+- Blocks can not be nested
+- A block must not define any geometry or external positioning (_margin, position_)
+
+### Example
+
+```
+<body class="page">
+  <header class="header page__header">...</header>
+  <footer class="footer page__footer">...</footer>
+</body>
+```
+
+```
+.page { ... }
+.page__header { ... }
+.page__footer { ... }
+
+.header { ... }
+
+.footer { ... }
+```
+
+## Element Entity
+
+An element:
+
+- Is a composite part of a block and cannot be used separately from it
+- Must be created if a section of code cannot be used separately without the parent entity.
+
+### Naming
+
+The element name must:
+
+- Describe its purpose (_what is it? An item? A text?_).
+- Be separated from the **block** name by a double underscore **(__)**.
+  - `block-name__element-name`
+- **Not define a hierarchy like:**
+  - `block-name__elem-name__elem-name`
+
+### Features
+
+- Elements can be nested.
+
+### Example
+
+```
+<header class="header">
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+```
+.header { ... }
+
+.nav { ... }
+.nav__list { ... }
+.nav__item { ... }
+.nav__link { ... }
+```
+
+## Modifier Entity
+
+A modifier:
+
+- Is an entity that defines the **appearance**, **state** or **behavior** of a block or element
+
+### Naming
+
+The modifier name should:
+
+- Describe its purpose (_what is it? A color modifier? A disabled state?_).
+- Be separated from the **block** or **element** name by a single underscore **(_)**.
+  - `block-name_modifier-name_modifier-value`
+  - `block-name__element-name_modifier-name_modifier-value`
+- Not include the **value** if its boolean.
+  - `block-name_active`
+
+### Features
+
+- A modifier cannot be used alone.
+
+### Example
+
+```
+<header class="header">
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <a class="nav__link nav__link_active nav__link_size_small"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+```
+.header { ... }
+
+.nav { ... }
+.nav__list { ... }
+.nav__item { ... }
+.nav__link { ... }
+.nav__link_active { ... }
+.nav__link_size_small { ... }
+```

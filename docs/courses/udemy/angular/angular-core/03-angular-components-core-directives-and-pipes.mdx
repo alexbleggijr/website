@@ -1,0 +1,961 @@
+---
+id: angular-components-core-directives-and-pipes
+title: Udemy · Angular · Core · Angular Components, Core Directives and Pipes
+sidebar_label: Angular Components, Core Directives and Pipes
+slug: /udemy/angular/angular-core/angular-components-core-directives-and-pipes
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Angular Components, Core Directives and Pipes
+
+## [New Section - Angular Components and Core Directives](https://www.udemy.com/course/angular-course/learn/lecture/11592046#overview)
+
+## [Building our First Angular Component](https://www.udemy.com/course/angular-course/learn/lecture/11592868#overview)
+
+```bash showLineNumbers
+npx ng g c course-card
+```
+
+**Component: app-course-card**
+
+```html title="app/course-card/course-card.component.html" showLineNumbers
+<p>course-card works!</p>
+```
+
+**Component: app-root**
+
+```html title="app/app.component.html" showLineNumbers
+<app-course-card></app-course-card>
+```
+
+```ts {2,7} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+## [Component Inputs and the Input Decorator](https://www.udemy.com/course/angular-course/learn/lecture/11679758#overview)
+
+```ts title="data/courses.mock.ts" showLineNumbers
+export interface ICourse {
+  id: number;
+  category: string;
+  description: string;
+  longDescription: string;
+  iconUrl: string;
+}
+
+export const COURSES: ICourse[] = [
+  {
+    id: 1,
+    category: 'INTERMEDIATE',
+    description: 'Angular Core Deep Dive',
+    longDescription:
+      'A detailed walk-through of the most important part of Angular - the Core and Common modules',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
+  },
+  {
+    id: 2,
+    category: 'BEGINNER',
+    description: 'RxJs In Practice Course',
+    longDescription:
+      'Understand the RxJs Observable pattern, learn the RxJs Operators via practical examples',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/rxjs-in-practice-course.png',
+  },
+  {
+    id: 3,
+    category: 'ADVANCED',
+    description: 'NgRx In Depth',
+    longDescription:
+      'Learn the modern Ngrx Ecosystem, including Store, Effects, Router Store, Ngrx Entity, Dev Tools and Schematics.',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-ngrx-course.png',
+  },
+  {
+    id: 4,
+    category: 'BEGINNER',
+    description: 'Angular for Beginners',
+    longDescription:
+      "Establish a solid layer of fundamentals, learn what's under the hood of Angular",
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/angular2-for-beginners-small-v2.png',
+  },
+  {
+    id: 5,
+    category: 'ADVANCED',
+    description: 'Angular Security Course',
+    longDescription:
+      'Learn Web Security Fundamentals and apply them to defend an Angular / Node Application from multiple types of attacks.',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/security-cover-small-v2.png',
+  },
+  {
+    id: 6,
+    category: 'ADVANCED',
+    description: 'Angular PWA Course',
+    longDescription:
+      "<p class='course-description'>Learn Angular Progressive Web Applications, build the future of the Web Today.",
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-pwa-course.png',
+  },
+  {
+    id: 7,
+    category: 'ADVANCED',
+    description: 'Angular Advanced Course',
+    longDescription:
+      'Learn Advanced Angular functionality typically used in Library Development. Advanced Components, Directives, Testing, Npm',
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/advanced_angular-small-v3.png',
+  },
+  {
+    id: 8,
+    category: 'BEGINNER',
+    description: 'Complete Typescript Course',
+    longDescription:
+      'Complete Guide to Typescript From Scratch: Learn the language in-depth and use it to build a Node REST API.',
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/typescript-2-small.png',
+  },
+  {
+    id: 9,
+    category: 'BEGINNER',
+    description: 'Angular Architecture Course',
+    longDescription:
+      'Learn the core RxJs Observable Pattern as well and many other Design Patterns for building Reactive Angular Applications.',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-academy/blog/images/rxjs-reactive-patterns-small.png',
+  },
+  {
+    id: 10,
+    category: 'ADVANCED',
+    description: 'Angular Material Course',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/material_design.png',
+    longDescription:
+      'Build Applications with the official Angular Widget Library',
+  },
+];
+```
+
+**Component: app-course-card**
+
+```html title="app/course-card/course-card.component.html" showLineNumbers
+<h2>{{ course.description }}</h2>
+<img [src]="course.iconUrl" [alt]="course.description" />
+<p>{{ course.longDescription }}</p>
+```
+
+```ts {2,12} title="app/course-card/course-card.component.ts" showLineNumbers
+import { Component, Input } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+}
+```
+
+**Component: app-root**
+
+```html title="app/app.component.html" showLineNumbers
+<app-course-card [course]="coreCourse"></app-course-card>
+<app-course-card [course]="rxjsCourse"></app-course-card>
+<app-course-card [course]="ngrxCourse"></app-course-card>
+```
+
+```ts {2,13,14,15} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { COURSES, ICourse } from '../../data/courses.mock';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  coreCourse: ICourse = COURSES[0];
+  rxjsCourse: ICourse = COURSES[1];
+  ngrxCourse: ICourse = COURSES[2];
+}
+```
+
+## [Angular Component Output - Custom Events and Event Emitters](https://www.udemy.com/course/angular-course/learn/lecture/11681860#overview)
+
+**Component: app-course-card**
+
+```html {4} title="app/course-card/course-card.component.html" showLineNumbers
+<h2>{{ course.description }}</h2>
+<img [src]="course.iconUrl" [alt]="course.description" />
+<p>{{ course.longDescription }}</p>
+<button (click)="onCourseSelected()">View Course</button>
+```
+
+```ts {14,16-18} title="app/course-card/course-card.component.ts" showLineNumbers
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+
+  @Output('courseSelected') courseEmitter = new EventEmitter<ICourse>();
+
+  onCourseSelected() {
+    this.courseEmitter.emit(this.course);
+  }
+}
+```
+
+**Component: app-root**
+
+```html {3,7,11} title="app/app.component.html" showLineNumbers
+<app-course-card
+  [course]="coreCourse"
+  (courseSelected)="onCourseSelected($event)"
+></app-course-card>
+<app-course-card
+  [course]="rxjsCourse"
+  (courseSelected)="onCourseSelected($event)"
+></app-course-card>
+<app-course-card
+  [course]="ngrxCourse"
+  (courseSelected)="onCourseSelected($event)"
+></app-course-card>
+```
+
+```ts {2,17-19} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { COURSES, ICourse } from '../../data/courses.mock';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  coreCourse: ICourse = COURSES[0];
+  rxjsCourse: ICourse = COURSES[1];
+  ngrxCourse: ICourse = COURSES[2];
+
+  onCourseSelected(course: ICourse) {
+    console.log(course);
+  }
+}
+```
+
+## [Angular 17 Control Flow Syntax](https://www.udemy.com/course/angular-course/learn/lecture/11681860#overview)
+
+## [The Angular 17 for syntax](https://www.udemy.com/course/angular-course/learn/lecture/41066174#overview)
+
+**Component: app-root**
+
+```html title="app/app.component.html" showLineNumbers
+@for (course of courses; track course.id) {
+<app-course-card
+  [course]="course"
+  (courseSelected)="onCourseSelected($event)"
+/>
+}
+```
+
+```ts {13} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { COURSES, ICourse } from '../../data/courses.mock';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  courses: ICourse[] = COURSES;
+
+  onCourseSelected(course: ICourse) {
+    console.log(course);
+  }
+}
+```
+
+## [Angular for empty, $index and other extra options](https://www.udemy.com/course/angular-course/learn/lecture/41066178#overview)
+
+**Component: app-course-card**
+
+```html {1} title="app/course-card/course-card.component.html" showLineNumbers
+<h2>{{ index }} {{ course.description }}</h2>
+<img [src]="course.iconUrl" [alt]="course.description" />
+<p>{{ course.longDescription }}</p>
+<button (click)="onCourseSelected()">View Course</button>
+```
+
+```ts {13} title="app/course-card/course-card.component.ts" showLineNumbers
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+  @Input({ required: true }) index!: number;
+
+  @Output('courseSelected') courseEmitter = new EventEmitter<ICourse>();
+
+  onCourseSelected() {
+    this.courseEmitter.emit(this.course);
+  }
+}
+```
+
+**Component: app-root**
+
+```html title="app/app.component.html" showLineNumbers
+@for (course of courses; track course.id; let index = $index; let count =
+$count; let first = $first; let last = $last; let even = $even; let odd = $odd)
+{
+<app-course-card
+  [course]="course"
+  [index]="index"
+  [class.first]="first"
+  [class.last]="last"
+  [class.even]="even"
+  [class.odd]="odd"
+  (courseSelected)="onCourseSelected($event)"
+/>
+} @empty {
+<p>No courses found!</p>
+}
+
+<!-- or -->
+
+<!-- @for (course of courses; track course.id; ) {
+<app-course-card
+  [course]="course"
+  [index]="$index"
+  [class.first]="$first"
+  [class.last]="$last"
+  [class.even]="$even"
+  [class.odd]="$odd"
+  (courseSelected)="onCourseSelected($event)"
+/>
+} @empty {
+<p>No courses found!</p>
+} -->
+```
+
+## [Understanding Angular 17 for tracking functions](https://www.udemy.com/course/angular-course/learn/lecture/41066180#overview)
+
+**Component: app-root**
+
+```html {1-4,5} title="app/app.component.html" showLineNumbers
+<!--
+  if not unique identifier
+  @for (course of courses; track $index; ) { }
+-->
+@for (course of courses; track trackCourse; ) {
+<app-course-card
+  [course]="course"
+  [index]="$index"
+  [class.first]="$first"
+  [class.last]="$last"
+  [class.even]="$even"
+  [class.odd]="$odd"
+  (courseSelected)="onCourseSelected($event)"
+/>
+} @empty {
+<p>No courses found!</p>
+}
+```
+
+```ts {19-21} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { COURSES, ICourse } from '../../data/courses.mock';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  courses: ICourse[] = COURSES;
+
+  onCourseSelected(course: ICourse) {
+    console.log(course);
+  }
+
+  trackCourse(index: number, course: ICourse) {
+    return course.id;
+  }
+}
+```
+
+## [What's Next - The ngFor Directive](https://www.udemy.com/course/angular-course/learn/lecture/41066184#overview)
+
+## [The Angular ngFor Core Directive](https://www.udemy.com/course/angular-course/learn/lecture/11683062#overview)
+
+**Component: app-root**
+
+```ts {1,9} title="app/app.component.ts" showLineNumbers
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { COURSES, ICourse } from '../../data/courses.mock';
+import { CourseCardComponent } from './course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  courses: ICourse[] = COURSES;
+
+  onCourseSelected(course: ICourse) {
+    console.log(course);
+  }
+}
+```
+
+```html title="app/app.component.html" showLineNumbers
+<app-course-card
+  *ngFor="
+    let course of courses;
+    index as i;
+    first as isFirst;
+    last as isLast;
+    even as isEven;
+    odd as isOdd
+  "
+  [course]="course"
+  [index]="i"
+  [class.first]="isFirst"
+  [class.last]="isLast"
+  [class.even]="isEven"
+  [class.odd]="isOdd"
+  (courseSelected)="onCourseSelected($event)"
+/>
+```
+
+## [Angular 17 - Comparison between for and ngFor](https://www.udemy.com/course/angular-course/learn/lecture/41066190#overview)
+
+- Less verbose, more intuitive.
+- The `@for` now forces developers to use a tracking function, so performance-wise it's safer.
+- The `@for` syntax is automatically included in templates, no explicit imports are needed.
+- Migration available.
+
+```bash showLineNumbers
+npx ng generate @angular/core:control-flow
+```
+
+## [Angular 17 - if Section Introduction](https://www.udemy.com/course/angular-course/learn/lecture/41066192#overview)
+
+## [The Angular 17 if else syntax](https://www.udemy.com/course/angular-course/learn/lecture/41066196#overview)
+
+**Component: app-course-card**
+
+```html {3-9} title="app/course-card/course-card.component.html" showLineNumbers
+<h2>{{ index }} {{ course.description }}</h2>
+
+@if(course.id === 1) {
+<p>Course with id 1 detected!</p>
+}@else if(course.iconUrl) {
+<img [src]="course.iconUrl" [alt]="course.description" />
+} @else {
+<p>No image available!</p>
+}
+
+<p>{{ course.longDescription }}</p>
+<button (click)="onCourseSelected()">View Course</button>
+```
+
+```ts {16,17,34,35} title="data/courses.mock.ts" showLineNumbers
+export interface ICourse {
+  id: number;
+  category: string;
+  description: string;
+  longDescription: string;
+  iconUrl?: string;
+}
+
+export const COURSES: ICourse[] = [
+  {
+    id: 1,
+    category: 'INTERMEDIATE',
+    description: 'Angular Core Deep Dive',
+    longDescription:
+      'A detailed walk-through of the most important part of Angular - the Core and Common modules',
+    /* iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png', */
+  },
+  {
+    id: 2,
+    category: 'BEGINNER',
+    description: 'RxJs In Practice Course',
+    longDescription:
+      'Understand the RxJs Observable pattern, learn the RxJs Operators via practical examples',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/rxjs-in-practice-course.png',
+  },
+  {
+    id: 3,
+    category: 'ADVANCED',
+    description: 'NgRx In Depth',
+    longDescription:
+      'Learn the modern Ngrx Ecosystem, including Store, Effects, Router Store, Ngrx Entity, Dev Tools and Schematics.',
+    /* iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-ngrx-course.png', */
+  },
+  {
+    id: 4,
+    category: 'BEGINNER',
+    description: 'Angular for Beginners',
+    longDescription:
+      "Establish a solid layer of fundamentals, learn what's under the hood of Angular",
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/angular2-for-beginners-small-v2.png',
+  },
+  {
+    id: 5,
+    category: 'ADVANCED',
+    description: 'Angular Security Course',
+    longDescription:
+      'Learn Web Security Fundamentals and apply them to defend an Angular / Node Application from multiple types of attacks.',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/security-cover-small-v2.png',
+  },
+  {
+    id: 6,
+    category: 'ADVANCED',
+    description: 'Angular PWA Course',
+    longDescription:
+      "<p class='course-description'>Learn Angular Progressive Web Applications, build the future of the Web Today.",
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-pwa-course.png',
+  },
+  {
+    id: 7,
+    category: 'ADVANCED',
+    description: 'Angular Advanced Course',
+    longDescription:
+      'Learn Advanced Angular functionality typically used in Library Development. Advanced Components, Directives, Testing, Npm',
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/advanced_angular-small-v3.png',
+  },
+  {
+    id: 8,
+    category: 'BEGINNER',
+    description: 'Complete Typescript Course',
+    longDescription:
+      'Complete Guide to Typescript From Scratch: Learn the language in-depth and use it to build a Node REST API.',
+    iconUrl:
+      'https://angular-academy.s3.amazonaws.com/thumbnails/typescript-2-small.png',
+  },
+  {
+    id: 9,
+    category: 'BEGINNER',
+    description: 'Angular Architecture Course',
+    longDescription:
+      'Learn the core RxJs Observable Pattern as well and many other Design Patterns for building Reactive Angular Applications.',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-academy/blog/images/rxjs-reactive-patterns-small.png',
+  },
+  {
+    id: 10,
+    category: 'ADVANCED',
+    description: 'Angular Material Course',
+    iconUrl:
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/material_design.png',
+    longDescription:
+      'Build Applications with the official Angular Widget Library',
+  },
+];
+```
+
+## [What's Next - The ngIf Directive](https://www.udemy.com/course/angular-course/learn/lecture/41066202#overview)
+
+## [Angular ngIf Directive and the Elvis Operator](https://www.udemy.com/course/angular-course/learn/lecture/11683640#overview)
+
+**Component: app-course-card**
+
+```html {1,3,11,15-16,18,20-24,28} title="app/course-card/course-card.component.html" showLineNumbers
+<!-- instead of using course?. in all template -->
+
+<div *ngIf="course">
+  <h2>{{ index }} {{ course.description }}</h2>
+
+  <p>Course with id 1 detected!</p>
+
+  <img
+    [src]="course.iconUrl"
+    [alt]="course.description"
+    *ngIf="isImageVisible(); else noImage"
+  />
+
+  <ng-template #noImage>
+    <p>No image available!</p>
+  </ng-template>
+
+  <!-- or -->
+
+  <!-- <img
+    [src]="course.iconUrl"
+    [alt]="course.description"
+    *ngIf="course.description"
+  /> -->
+
+  <p>{{ course.longDescription }}</p>
+  <button (click)="onCourseSelected()">View Course</button>
+</div>
+```
+
+```ts {1,8,22-24} title="app/course-card/course-card.component.ts" showLineNumbers
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+  @Input({ required: true }) index!: number;
+
+  @Output('courseSelected') courseEmitter = new EventEmitter<ICourse>();
+
+  onCourseSelected() {
+    this.courseEmitter.emit(this.course);
+  }
+
+  isImageVisible() {
+    return this.course && this.course.iconUrl;
+  }
+}
+```
+
+## [Angular 17 - Comparison between if vs ngIf](https://www.udemy.com/course/angular-course/learn/lecture/41066208#overview)
+
+- Less verbose, more intuitive.
+- No need for imports.
+- Supports else if and else conditions.
+- Migration available.
+
+```bash showLineNumbers
+npx ng generate @angular/core:control-flow
+```
+
+## [Angular ngClass Core Directive - Learn All Features](https://www.udemy.com/course/angular-course/learn/lecture/11765252#overview)
+
+**Component: app-course-card**
+
+```html {1-5,6} title="app/course-card/course-card.component.html" showLineNumbers
+<!-- [ngClass]="'course-card beginner'" -->
+<!-- [ngClass]="['course-card', 'beginner']" -->
+<!-- [ngClass]="{ 'course-card': true, beginner: course.description === 'beginner' }" -->
+<!-- better approach to keep the template readable -->
+<!-- [ngClass]="cardClasses()" -->
+<div class="course-card" *ngIf="course" [ngClass]="cardClasses()">
+  <h2>{{ index }} {{ course.description }}</h2>
+
+  @if(course.id === 1) {
+  <p>Course with id 1 detected!</p>
+  }@else if(course.iconUrl) {
+  <img [src]="course.iconUrl" [alt]="course.description" />
+  } @else {
+  <p>No image available!</p>
+  }
+
+  <p>{{ course.longDescription }}</p>
+  <button (click)="onCourseSelected()">View Course</button>
+</div>
+```
+
+```scss title="app/course-card/course-card.component.scss" showLineNumbers
+.beginner {
+  background-color: aquamarine;
+}
+```
+
+```ts {26-42} title="app/course-card/course-card.component.ts" showLineNumbers
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+  @Input({ required: true }) index!: number;
+
+  @Output('courseSelected') courseEmitter = new EventEmitter<ICourse>();
+
+  onCourseSelected() {
+    this.courseEmitter.emit(this.course);
+  }
+
+  isImageVisible() {
+    return this.course && this.course.iconUrl;
+  }
+
+  cardClasses() {
+    /* if (this.course.category === 'BEGINNER') {
+      return 'beginner';
+    }
+
+    return; */
+
+    /* if (this.course.category === 'BEGINNER') {
+      return ['beginner'];
+    }
+
+    return; */
+
+    return {
+      beginner: this.course.category === 'BEGINNER',
+    };
+  }
+}
+```
+
+## [Angular ngStyle Core Directive - When to use it and Why](https://www.udemy.com/course/angular-course/learn/lecture/11766736#overview)
+
+**Component: app-course-card**
+
+```html {1-4,6} title="app/course-card/course-card.component.html" showLineNumbers
+<!-- [style.text-decoration]="'underline'" -->
+<!-- [ngStyle]="{ 'text-decoration': 'underline' }" -->
+<!-- better approach to keep the template readable -->
+<!-- [ngStyle]="cardStyles()" -->
+<div class="course-card" *ngIf="course" [ngClass]="cardClasses()">
+  <h2 [ngStyle]="cardStyles()">{{ index }} {{ course.description }}</h2>
+
+  @if(course.id === 1) {
+  <p>Course with id 1 detected!</p>
+  }@else if(course.iconUrl) {
+  <img [src]="course.iconUrl" [alt]="course.description" />
+  } @else {
+  <p>No image available!</p>
+  }
+
+  <p>{{ course.longDescription }}</p>
+  <button (click)="onCourseSelected()">View Course</button>
+</div>
+```
+
+```ts {44-49} title="app/course-card/course-card.component.ts" showLineNumbers
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ICourse } from '../../../data/courses.mock';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {
+  @Input({ required: true }) course!: ICourse;
+  @Input({ required: true }) index!: number;
+
+  @Output('courseSelected') courseEmitter = new EventEmitter<ICourse>();
+
+  onCourseSelected() {
+    this.courseEmitter.emit(this.course);
+  }
+
+  isImageVisible() {
+    return this.course && this.course.iconUrl;
+  }
+
+  cardClasses() {
+    /* if (this.course.category === 'BEGINNER') {
+      return 'beginner';
+    }
+
+    return; */
+
+    /* if (this.course.category === 'BEGINNER') {
+      return ['beginner'];
+    }
+
+    return; */
+
+    return {
+      beginner: this.course.category === 'BEGINNER',
+    };
+  }
+
+  cardStyles() {
+    return {
+      'text-decoration':
+        this.course.category === 'BEGINNER' ? 'underline' : null,
+    };
+  }
+}
+```
+
+## [Angular 17 switch Section Introduction](https://www.udemy.com/course/angular-course/learn/lecture/41066216#overview)
+
+## [The Angular 17 switch syntax in action](https://www.udemy.com/course/angular-course/learn/lecture/41066220#overview)
+
+**Component: app-course-card**
+
+```html {14-22} title="app/course-card/course-card.component.html" showLineNumbers
+<div class="course-card" *ngIf="course" [ngClass]="cardClasses()">
+  <h2 [ngStyle]="cardStyles()">{{ index }} {{ course.description }}</h2>
+
+  @if(course.id === 1) {
+  <p>Course with id 1 detected!</p>
+  }@else if(course.iconUrl) {
+  <img [src]="course.iconUrl" [alt]="course.description" />
+  } @else {
+  <p>No image available!</p>
+  }
+
+  <p>{{ course.longDescription }}</p>
+
+  @switch(course.category) { @case('BEGINNER') {
+  <p>BEGINNER</p>
+  } @case('INTERMEDIATE') {
+  <p>INTERMEDIATE</p>
+  } @case('ADVANCED') {
+  <p>ADVANCED</p>
+  } @default {
+  <p>UNKNOWN</p>
+  } }
+
+  <button (click)="onCourseSelected()">View Course</button>
+</div>
+```
+
+## [Angular ngSwitch Core Directive In Detail](https://www.udemy.com/course/angular-course/learn/lecture/11767268#overview)
+
+**Component: app-course-card**
+
+```html {14-19} title="app/course-card/course-card.component.html" showLineNumbers
+<div class="course-card" *ngIf="course" [ngClass]="cardClasses()">
+  <h2 [ngStyle]="cardStyles()">{{ index }} {{ course.description }}</h2>
+
+  @if(course.id === 1) {
+  <p>Course with id 1 detected!</p>
+  }@else if(course.iconUrl) {
+  <img [src]="course.iconUrl" [alt]="course.description" />
+  } @else {
+  <p>No image available!</p>
+  }
+
+  <p>{{ course.longDescription }}</p>
+
+  <div [ngSwitch]="course.category">
+    <p *ngSwitchCase="'BEGINNER'">BEGINNER</p>
+    <p *ngSwitchCase="'INTERMEDIATE'">INTERMEDIATE</p>
+    <p *ngSwitchCase="'ADVANCED'">ADVANCED</p>
+    <p *ngSwitchDefault="'UNKNOWN'">UNKNOWN</p>
+  </div>
+
+  <!--   @switch(course.category) { @case('BEGINNER') {
+  <p>BEGINNER</p>
+  } @case('INTERMEDIATE') {
+  <p>INTERMEDIATE</p>
+  } @case('ADVANCED') {
+  <p>ADVANCED</p>
+  } @default {
+  <p>UNKNOWN</p>
+  } } -->
+
+  <button (click)="onCourseSelected()">View Course</button>
+</div>
+```
+
+## [Angular ng-container Core Directive - When to use it?](https://www.udemy.com/course/angular-course/learn/lecture/11767280#overview)
+
+**Component: app-course-card**
+
+```html {1,15} title="app/course-card/course-card.component.html" showLineNumbers
+<ng-container *ngIf="course">
+  <div class="course-card" [ngClass]="cardClasses()">
+    <h2 [ngStyle]="cardStyles()">{{ index }} {{ course.description }}</h2>
+
+    @if(course.id === 1) {
+    <p>Course with id 1 detected!</p>
+    }@else if(course.iconUrl) {
+    <img [src]="course.iconUrl" [alt]="course.description" />
+    } @else {
+    <p>No image available!</p>
+    }
+
+    <p>{{ course.longDescription }}</p>
+
+    <!-- <ng-container [ngSwitch]="course.category">
+      <p *ngSwitchCase="'BEGINNER'">BEGINNER</p>
+      <p *ngSwitchCase="'INTERMEDIATE'">INTERMEDIATE</p>
+      <p *ngSwitchCase="'ADVANCED'">ADVANCED</p>
+      <p *ngSwitchDefault="'UNKNOWN'">UNKNOWN</p>
+    </ng-container> -->
+
+    @switch(course.category) { @case('BEGINNER') {
+    <p>BEGINNER</p>
+    } @case('INTERMEDIATE') {
+    <p>INTERMEDIATE</p>
+    } @case('ADVANCED') {
+    <p>ADVANCED</p>
+    } @default {
+    <p>UNKNOWN</p>
+    } }
+
+    <button (click)="onCourseSelected()">View Course</button>
+  </div>
+</ng-container>
+```
+
+## [Angular Built-In Pipes - Complete Catalog](https://www.udemy.com/course/angular-course/learn/lecture/11818448#overview)

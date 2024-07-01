@@ -1,0 +1,85 @@
+---
+id: introduction
+title: Udemy · Angular · Core · Introduction
+sidebar_label: Introduction
+slug: /udemy/angular/angular-core/introduction
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Introduction
+
+## [Angular Core Deep Dive - Introduction](https://www.udemy.com/course/angular-course/learn/lecture/42935666#overview)
+
+## [Important - Recommended Software Versions](https://www.udemy.com/course/angular-course/learn/lecture/14991228#overview)
+
+## [Course Kickoff - Development Environment Setup](https://www.udemy.com/course/angular-course/learn/lecture/11588798#overview)
+
+```bash showLineNumbers
+npx -p @angular/cli ng new angular-core
+```
+
+## [The Typescript Jumpstart Ebook](https://www.udemy.com/course/angular-course/learn/lecture/12470114#overview)
+
+## [Introduction To Angular - Custom HTML Elements, Model vs View](https://www.udemy.com/course/angular-course/learn/lecture/11590192#overview)
+
+**Component: app-root**
+
+```html title="app/app.component.html" showLineNumbers
+<h1>{{ data.title }}</h1>
+```
+
+```ts {12-14} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
+})
+export class AppComponent {
+  data = {
+    title: 'app-root'
+  };
+}
+```
+
+## [Why Angular? Learn the Key Features of Angular Core](https://www.udemy.com/course/angular-course/learn/lecture/11591722#overview)
+
+**Component: app-root**
+
+```html {3-8,10} title="app/app.component.html" showLineNumbers
+<h1>{{ data.title }}</h1>
+
+<input
+  #titleInput
+  [value]="data.title"
+  (keyup)="onKeyUp(titleInput.value)"
+  type="text"
+/>
+
+<button (click)="onClick()">click</button>
+```
+
+```ts {13,16-18,20-22} title="app/app.component.ts" showLineNumbers
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
+})
+export class AppComponent {
+  data = {
+    title: 'app-root'
+  };
+}
+```

@@ -1,0 +1,36 @@
+---
+id: usage
+title: Notes · Angular · Components · Usage
+sidebar_label: Usage
+slug: /notes/angular/components/usage
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## Resources
+
+- [Angular Docs](https://angular.dev/guide/components/importing)
+
+## [Usage](https://angular.dev/guide/components/importing)
+
+Angular supports two ways of making a component available to other components: as a `standalone` component or in an `NgModule`.
+
+## [Standalone components](https://angular.dev/guide/components/importing#standalone-components)
+
+A **standalone component** is a component that sets `standalone:` true in its component metadata. Standalone components directly import other components, directives, and pipes used in their templates:
+
+```ts {2,6,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```

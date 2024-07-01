@@ -4,16 +4,28 @@ import React from 'react';
 
 const courses = [
   {
+    url: 'docs/rocketseat/training/react',
+    title: 'React',
+    imageUrl: '../img/courses/react.png',
+    description: <><a href="https://www.rocketseat.com.br/formacao/react" target="_blank"><strong>Online course</strong></a> by <a href="https://www.rocketseat.com.br/" target="_blank"><strong>Rocketseat</strong></a> on <a href="https://www.rocketseat.com.br/" target="_blank"><strong>Rocketseat</strong></a>.</>,
+  },
+  {
     url: 'docs/rocketseat/training/react-native',
     title: 'React Native',
     imageUrl: '../img/courses/react-native.png',
+    description: <><a href="https://www.rocketseat.com.br/formacao/react-native" target="_blank"><strong>Online course</strong></a> by <a href="https://www.rocketseat.com.br/" target="_blank"><strong>Rocketseat</strong></a> on <a href="https://www.rocketseat.com.br/" target="_blank"><strong>Rocketseat</strong></a>.</>,
+  },
+  {
+    url: 'docs/udemy/angular/angular-core',
+    title: 'Angular · Core',
+    imageUrl: '../img/courses/angular.png',
     description: <><a href="https://www.udemy.com/course/angular-course" target="_blank"><strong>Online course</strong></a> by <a href="https://www.udemy.com/user/vascocavalheiro/" target="_blank"><strong>Angular University</strong></a> on <a href="https://www.udemy.com/" target="_blank"><strong>Udemy</strong></a>.</>,
   },
   {
-    url: 'docs/udemy/angular-university/angular-core',
-    title: 'Angular Core',
-    imageUrl: '../img/courses/angular.png',
-    description: <><a href="https://www.udemy.com/course/angular-course" target="_blank"><strong>Online course</strong></a> by <a href="https://www.udemy.com/user/vascocavalheiro/" target="_blank"><strong>Angular University</strong></a> on <a href="https://www.udemy.com/" target="_blank"><strong>Udemy</strong></a>.</>,
+    url: 'docs/udemy/design/figma/essentials',
+    title: 'Figma · Essentials',
+    imageUrl: '../img/courses/figma.png',
+    description: <><a href="https://www.udemy.com/course/figma-ux-ui-design-user-experience-tutorial-course/" target="_blank"><strong>Online course</strong></a> by <a href="https://www.udemy.com/user/danielwalterscott/" target="_blank"><strong>Daniel Walter Scott</strong></a> on <a href="https://www.udemy.com/" target="_blank"><strong>Udemy</strong></a>.</>,
   },
 ];
 

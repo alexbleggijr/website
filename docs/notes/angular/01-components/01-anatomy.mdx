@@ -1,0 +1,95 @@
+---
+id: anatomy
+title: Notes · Angular · Components · Anatomy
+sidebar_label: Anatomy
+slug: /notes/angular/components/anatomy
+toc_max_heading_level: 4
+hide_title: true
+---
+
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## Resources
+
+- [Angular Docs](https://angular.dev/guide/components)
+
+## [Anatomy](https://angular.dev/guide/components)
+
+Every component must have:
+
+- An HTML template
+- A [CSS selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors)
+- A TypeScript class
+
+You provide Angular-specific information for a component by adding a `@Component` [decorator](https://www.typescriptlang.org/docs/handbook/decorators.html) on top of the TypeScript class. The object passed to it is called the component's metadata.
+
+```bash showLineNumbers
+npx ng g c 01-components/course-card
+```
+
+```ts {6,7} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  template: `<div class="course-card"><p>course-card works!</p></div>`,
+  styles: `.course-card { padding: 1rem; }`,
+})
+export class CourseCardComponent {}
+```
+
+You can alternatively choose to write your template and styles in separate files. This can help separate the concerns of presentation from behavior in your project.
+
+**Component's behavior:**
+
+```ts {6,7} title="src/app/01-components/course-card/course-card.component.ts"
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-course-card',
+  standalone: true,
+  templateUrl: './course-card.component.html',
+  styleUrl: './course-card.component.scss',
+})
+export class CourseCardComponent {}
+```
+
+**Component's presentation:**
+
+```html title="src/app/01-components/course-card/course-card.component.html"
+<!-- 'course-card' view -->
+<div class="course-card">
+  <p>course-card works!</p>
+</div>
+```
+
+```scss title="src/app/01-components/course-card/course-card.component.scss"
+.course-card {
+  padding: 1rem;
+}
+```
+
+## [Using components](https://angular.dev/guide/components#using-components)
+
+Angular creates an instance of the component for every matching HTML element it encounters.
+
+```ts {2,7} title="src/app/app.component.ts"
+import { Component } from '@angular/core';
+import { CourseCardComponent } from './01-components/course-card/course-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CourseCardComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {}
+```
+
+```html title="src/app/app.component.html"
+<!-- 'course-card' host element -->
+<app-course-card />
+```
+
